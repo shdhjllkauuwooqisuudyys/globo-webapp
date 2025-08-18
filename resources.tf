@@ -25,16 +25,16 @@ locals {
 # RESOURCES
 ##################################################################################
 
-resource "aws_instance" "main" {
-  count         = length(var.public_subnets)
-  ami           = nonsensitive(data.aws_ssm_parameter.amzn2_linux.value)
-  instance_type = var.instance_type
-  subnet_id     = var.public_subnets[count.index]
-  vpc_security_group_ids = [
-    aws_security_group.webapp_http_inbound_sg.id,
-    aws_security_group.webapp_ssh_inbound_sg.id,
-    aws_security_group.webapp_outbound_sg.id,
-  ]
+#resource "aws_instance" "main" {
+#  count         = length(var.public_subnets)
+#  ami           = nonsensitive(data.aws_ssm_parameter.amzn2_linux.value)
+#  instance_type = var.instance_type
+#  subnet_id     = var.public_subnets[count.index]
+#  vpc_security_group_ids = [
+#    aws_security_group.webapp_http_inbound_sg.id,
+#    aws_security_group.webapp_ssh_inbound_sg.id,
+#    aws_security_group.webapp_outbound_sg.id,
+#  ]
 
   key_name = module.ssh_keys.key_pair_name
 
