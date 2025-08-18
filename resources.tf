@@ -35,36 +35,36 @@ locals {
 #    aws_security_group.webapp_ssh_inbound_sg.id,
 #    aws_security_group.webapp_outbound_sg.id,
 #  ]
-
-  key_name = module.ssh_keys.key_pair_name
-
-  tags = merge(local.common_tags, {
-    "Name" = "${local.name_prefix}-webapp-${count.index}"
-  })
-
-  # Provisioner Stuff
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    port        = "22"
-    host        = self.public_ip
-    private_key = module.ssh_keys.private_key_openssh
-  }
-
-  provisioner "file" {
-    source      = "./templates/userdata.sh"
-    destination = "/home/ec2-user/userdata.sh"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /home/ec2-user/userdata.sh",
-      "sh /home/ec2-user/userdata.sh",
-    ]
-    on_failure = continue
-  }
-
-}
+#
+#  key_name = module.ssh_keys.key_pair_name
+#
+#  tags = merge(local.common_tags, {
+#    "Name" = "${local.name_prefix}-webapp-${count.index}"
+#  })
+#
+#  # Provisioner Stuff
+#  connection {
+#    type        = "ssh"
+#    user        = "ec2-user"
+#    port        = "22"
+#    host        = self.public_ip
+#    private_key = module.ssh_keys.private_key_openssh
+#  }
+#
+#  provisioner "file" {
+#    source      = "./templates/userdata.sh"
+#    destination = "/home/ec2-user/userdata.sh"
+#  }
+#
+#  provisioner "remote-exec" {
+#    inline = [
+#      "chmod +x /home/ec2-user/userdata.sh",
+#      "sh /home/ec2-user/userdata.sh",
+#    ]
+#    on_failure = continue
+#  }
+#
+#}
 
 resource "null_resource" "webapp" {
 
